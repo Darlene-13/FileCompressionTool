@@ -29,7 +29,7 @@ public class FileMetadata implements Serializable {
     private String extractExtension(String filename){
         int lastDot = filename.lastIndexOf('.');
         if (lastDot > 0 && lastDot < filename.length() - 1){
-            return filename.substring(lastDot + 1).toLowerCase()
+            return filename.substring(lastDot + 1).toLowerCase() //substring(startIndex) → Takes everything from startIndex to the end of the string.
         }
         return ""; // no extension
     }
@@ -45,7 +45,7 @@ public class FileMetadata implements Serializable {
     public String getCompressedFilename(){
         int lastDot = originalFilename.lastIndexOf('.');
         if (lastDot > 0) {
-            return originalFilename.substring(0, lastDot) + ".huff";
+            return originalFilename.substring(0, lastDot) + ".huff";    // substring(0, lastDot) → Keeps everything BEFORE the last dot.
         }
         return originalFilename + ".huff";
     }
