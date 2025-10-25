@@ -14,6 +14,7 @@ public enum CompressionFormat {
     private final boolean supportsMultipleFiles;
     private final int defaultCompressionLevel;
 
+
     CompressionFormat(String extension, String algorithmName, boolean supportsMultipleFiles, int defaultCompressionLevel ) {
         this.extension = extension;
         this.algorithmName = algorithmName;
@@ -22,29 +23,22 @@ public enum CompressionFormat {
 
     }
 
-    public String getExtension(String name){
-
-
-
-        return null;
+    // Getters
+    public String getExtension(){
+        return extension;
     }
 
     public String getAlgorithmName(){
-
-        return null;
+        return algorithmName;
     }
-    public boolean supportsMultipleFiles(){
-
-
-        return false;
+    public boolean supportsMultipleFiles() {
+        return supportsMultipleFiles;
     }
 
-    public int getDefaultCompressionLevel(){
-
-
-        return 0;
+    public int getDefaultCompressionLevel() {
+        return defaultCompressionLevel;
     }
 
-    // Getters
+
 
 }
