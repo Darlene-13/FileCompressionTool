@@ -39,6 +39,16 @@ public enum CompressionFormat {
         return defaultCompressionLevel;
     }
 
+    // file format based on extension
+    public static CompressionFormat fromExtension(String extension){
+        for (CompressionFormat format : CompressionFormat.values()) {
+            if (format.getExtension().equalsIgnoreCase(extension)) {
+                return format;
+            }
+        }
+        throw new IllegalArgumentException("Unsupported compression format: " + extension);
+    }
+
 
 
 }
