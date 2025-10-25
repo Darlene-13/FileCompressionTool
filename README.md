@@ -8,6 +8,11 @@ This project is meant for learning purposes.
 
 The Project aims to depict parallel processing, multithreading , OOP amongst other Java Properties.
 
+**The Core Problem:**
+When you have a file, it's made of bytes. Each byte is a number from 0-255. A file takes up space. The goal of compression is to represent the same information using fewer bytes.
+Think of it like language: If I write "the the the the the" five times, I could instead write "the (×5)" and save space. Compression finds these patterns and represents them more efficiently.
+
+**Why does this matter?** Storage is cheaper with smaller files. Transmission is faster. Backup is quicker.
 
 ---
 ## FEATURES
@@ -61,4 +66,123 @@ The Project aims to depict parallel processing, multithreading , OOP amongst oth
 - It Prioritizes speeed over compression ration
 -  It is used when in need of fast compression with decent ratio.
 
+## FILE STRUCTURE AND ARCHITECTURE DESIGN
+### Layer 1: FILE TYPE DETECTION
+> - Input: Filename with extension
+> - Process: Map extension to the suitable algorithm
+> - CompressionFormat enum
+>
+>  
+> We need: FileTypeDetector class (utility class), FileCompression format (enum, matches compression format to necessary algorithms) and FormatDetectionException to handle edge cases like wrong file input.
 
+
+### Layer 2: COMPRESSION STRATEGY
+````
+CompressionStrategy (Interface)
+├── DeflateCompressionStrategy (ZIP/GZIP/TAR.GZ)
+├── Bzip2CompressionStrategy (BZIP2)
+├── XzCompressionStrategy (XZ)
+├── LzmaCompressionStrategy (7Z)
+├── Lz4CompressionStrategy (LZ4)
+└── HuffmanCompressionStrategy (Your custom implementation)
+
+Each implements:
+- compress(sourceFile, destinationFile, compressionLevel, progressListener)
+- decompress(sourceFile, destinationFile, progressListener)
+- getCompressionRatio()
+- validateFormat(file)
+- getSupportedExtensions()
+```` 
+
+### LAYER 3: CUSTOM HUFFMAN IMPLEMENTATION
+````
+HuffmanCoding (Your core algorithm implementation)
+├── HuffmanNode (binary tree node)
+├── HuffmanTree (builds tree from frequencies)
+├── HuffmanEncoder (compress)
+├── HuffmanDecoder (decompress)
+├── FrequencyAnalyzer (count byte frequencies)
+└── BitStreamHandler (convert binary strings ↔ bytes)
+
+Key classes:
+- HuffmanNode: left, right, frequency, symbol
+- PriorityQueue<HuffmanNode>: min-heap for tree building
+- HashMap<Byte, String>: map symbols to bit codes
+- BitSet or custom BitStream: handle bit-level operations
+
+````
+
+### LAYER 4: FILE I/O & STREAMING LAYER
+``````
+CompressionStreamHandler (manages file operations)
+├── readFileInChunks(file, chunkSize)
+├── writeFileInChunks(outputStream, chunkSize)
+├── handleLargeFiles(useThreadPool)
+├── validateSourceFile(file)
+├── createDestinationFile(file)
+└── calculateFileSize(file)
+
+Supporting classes:
+- BufferedInputStream/OutputStream (Java built-in)
+- Custom ChunkProcessor (manage chunks)
+- ProgressTracker (monitor progress)
+
+``````
+
+### LAYER 5: PROGRESS & MONITORING LAYER
+````
+CompressionProgressListener (Observer pattern)
+├── onCompressionStarted(fileName, fileSize)
+├── onProgress(bytesProcessed, totalBytes, percentage)
+├── onCompressionCompleted(compressionRatio, timeElapsed)
+└── onError(exception, recoverable)
+
+Supporting classes:
+- CompressionStatistics (track metrics)
+- PerformanceMonitor (time, memory usage)
+- ProgressCallback
+
+````
+
+### LAYER 6: CONFIGURATION & PROFILING LAYER
+```
+CompressionProfile (encapsulates settings)
+├── SPEED (for fast compression, lower ratio)
+├── BALANCED (mix of speed and compression)
+├── MAXIMUM (best compression, slowest)
+├── PARALLEL (multi-threaded)
+└── STREAMING (for huge files)
+
+CompressionConfig
+├── compressionLevel (1-9)
+├── chunkSize (64KB, 256KB, 1MB)
+├── threadPoolSize (for parallel processing)
+├── preserveMetadata (timestamps, permissions)
+├── deleteSourceAfterCompression
+└── compressionAlgorithmPreference
+```
+
+### LAYER 7: ERROR HANDLING LAYER
+```
+CompressionException (base)
+├── FormatNotSupportedException
+├── CorruptedFileException
+├── InsufficientDiskSpaceException
+├── InvalidCompressionParametersException
+├── FileAccessException
+├── EncodingException
+└── DecodingException
+```
+
+### LAYER 8: ORCHESTRATION (MAIN CONTROLLER)
+```
+FileCompressionManager (Main coordinator)
+├── compressFile(source, destination, format, profile, listener)
+├── decompressFile(source, destination, listener)
+├── compressDirectory(source, destination, format, recursive, listener)
+├── decompressDirectory(source, destination, listener)
+├── autoDetectAndDecompress(source, destination, listener)
+├── compareCompressionMethods(file)
+└── getCompressionStatistics()
+
+This ties all layers together
