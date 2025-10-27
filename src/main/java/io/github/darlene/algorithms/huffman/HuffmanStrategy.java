@@ -9,26 +9,26 @@ public class HuffmanStrategy implements CompressionStrategy {
     private int compressedFileSize;
     private double  compressionRatio;
     private boolean compressionSuccessStatus;
+    private boolean decompressionSuccessStatus;
     private String sourceFilePath;
     private String destinationFilePath;
+    private long startTime;
+    private long endTime;
+    private long compressionTime;
 
 
-    // Start time of compression
-    private final long startTime = System.currentTimeMillis();
-
-    // Getter for start time
-    public long getStartTime(){
-        return startTime;
-    }
 
     @Override
     public void compressFile(String sourceFilePath, String destinationFilePath, int compressionLevel) {
+        startTime = System.currentTimeMillis();
 
-    }
 
-    private final long endTime = System.currentTimeMillis();
-    public long getEndTime(){
-        return endTime;
+
+
+
+        compressionSuccessStatus = true;
+        endTime = System.currentTimeMillis();
+
     }
 
     @Override
@@ -39,33 +39,41 @@ public class HuffmanStrategy implements CompressionStrategy {
     @Override
     public double getCompressionRatio() {
         compressionRatio = ((double) (originalFileSize - compressedFileSize) / originalFileSize) * 100.0;
-        return 0;
+        return compressionRatio;
     }
 
     @Override
     public long getCompressionTime() {
-        long compressionTime = getEndTime() - getStartTime();
-        return 0;
+        compressionTime = endTime - startTime;
+        return compressionTime;
     }
 
     @Override
     public long getOriginalFileSize() {
-        return 0;
+        return originalFileSize;
     }
 
     @Override
     public long getCompressedFileSize() {
-        return 0;
+        return compressedFileSize;
     }
 
     @Override
     public void displayCompressionDetails() {
+        System.out.println("Compression Details:");
+        System.out.println("Original File Size: " + originalFileSize + " bytes");
+        System.out.println("Compressed File Size: " + compressedFileSize + " bytes");
+        System.out.println("Compression Ratio: " + String.format("%.2f", compressionRatio) + "%");
+        System.out.println("Time Taken for Compression: " + compressionTime + " ms");
 
     }
 
     @Override
     public void decompressFile(String sourceFilePath, String destinationFilePath) {
+        startTime = System.currentTimeMillis();
 
+        decompressionSuccessStatus = true;
+        endTime = System.currentTimeMillis();
     }
 
     @Override
@@ -75,6 +83,8 @@ public class HuffmanStrategy implements CompressionStrategy {
 
     @Override
     public void displayDecompressionDetails() {
+        System.out.println("Decompression Details:");
+        System.out.println("Time taken for Decompression: " + (endTime - startTime) + " ms");
 
     }
 
