@@ -2,7 +2,7 @@ package io.github.darlene.core;
 
 import java.util.Set;
 
-
+// This are file compressions mapped to the algorithms they use
 public enum CompressionFormat {
 
     ZIP(Set.of(CompressionType.DEFLATE), ".zip", 9),
@@ -37,7 +37,7 @@ public enum CompressionFormat {
     }
 
     //Method to find file format based on file extension
-    public static CompressionFormat getCompressionFormatByExtension(String extension){
+    public CompressionFormat getCompressionFormatByExtension(String extension){
         for (CompressionFormat format: CompressionFormat.values()){
             if(format.fileExtension.equalsIgnoreCase(extension)){
                 return format;
