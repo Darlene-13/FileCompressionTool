@@ -1,54 +1,43 @@
 package io.github.darlene.core;
 
+import java.util.Set;
+
+
 public enum CompressionFormat {
-    ZIP(".zip", "DEFLATE", true, 9),
-    GZIP(".gz", "DEFLATE", false, 9),
-    TAR_GZ(".tar.gz", "DEFLATE", true, 9),
-    BZIP2(".bz2", "Burrows-Wheeler", false, 9),
-    XZ(".xz", "LZMA2", false, 9),
-    LZMA(".7z", "LZMA", false, 9),
-    LZ4(".lz4", "LZ4", false, 9);
 
-    private final String extension;
-    private final String algorithmName;
-    private final boolean supportsMultipleFiles;
-    private final int defaultCompressionLevel;
+    ZIP(Set.of(CompressionType.DEFLATE), ".zip"),
+    TAR(Set.of(), ".tar"),   // Archive format without compression
+    GZIP(Set.of(CompressionType.DEFLATE), ".gz"),
+    TAR_GZ(Set.of(CompressionType.DEFLATE), ".tar.gz"),
+    BZIP2(Set.of(CompressionType.BWT, CompressionType.MTF, CompressionType.HUFFMAN), ".bz2"),
+    XZ(Set.of(CompressionType.LZMA2), ".xz"),
+    RAR(Set.of(CompressionType.PPM, CompressionType.LZSS, CompressionType.RANGE), ".rar");
 
 
-    CompressionFormat(String extension, String algorithmName, boolean supportsMultipleFiles, int defaultCompressionLevel ) {
-        this.extension = extension;
-        this.algorithmName = algorithmName;
-        this.supportsMultipleFiles = supportsMultipleFiles;
-        this.defaultCompressionLevel = defaultCompressionLevel;
+    private final Set<CompressionType> algorithms;
+    private final String fileExtension;
 
+
+
+    // Constructors and methods
+    CompressionFormat (Set<CompressionType> algorithms, String fileExtension){
+        this.algorithms = algorithms;
+        this.fileExtension = fileExtension;
     }
 
-    // Getters
-    public String getExtension(){
-        return extension;
+    // Getter
+    public Set<CompressionType> getAlgorithms(){
+        return algorithms;
     }
 
-    public String getAlgorithmName(){
-        return algorithmName;
-    }
-    public boolean supportsMultipleFiles() {
-        return supportsMultipleFiles;
-    }
-
-    public int getDefaultCompressionLevel() {
-        return defaultCompressionLevel;
-    }
-
-    // file format based on extension
-    public static CompressionFormat fromExtension(String extension){
-        for (CompressionFormat format : CompressionFormat.values()) {
-            if (format.getExtension().equalsIgnoreCase(extension)) {
+    //Method to find file format based on file extension
+    public static CompressionFormat getCompressionFormatByExtension(String extension){
+        for (CompressionFormat format: CompressionFormat.values()){
+            if(format.fileExtension.equalsIgnoreCase(extension)){
                 return format;
             }
         }
-        throw new IllegalArgumentException("Unsupported compression format: " + extension);
+        return null;
     }
-
-
 
 }
