@@ -12,22 +12,18 @@ public class HuffmanNode {
 
     // Constructor for the leaf node
     public HuffmanNode(byte symbol, int frequency){
-        if (node.symbol.equals(null)){
-            this.symbol = symbol;
-        } else {
-
-        }
         this.symbol = symbol;
         this.frequency = frequency;
-        if (node.left != null){
-            this.left = left;
-        }
-        if (node.right != null){
-            this.right = right;
-        }
+        this.left = null;
+        this.right = null;
     }
 
-    // Constructor for the internal node
+    // Constructor for the internal node : Internal nodes don't represent a byte. They're just containers combining two child nodes
+    public HuffmanNode (HuffmanNode left, HuffmanNode right){
+        this.left = left;
+        this.right = right;
+        this.frequency = left.getFrequency() + right.getFrequency();
+    }
 
     // Getters and Setters
     public byte getSymbol(){
