@@ -6,50 +6,32 @@ package io.github.darlene.core;
 public interface CompressionStrategy {
 
     // Define method to compress
-    public default void compressFile(String sourceFilePath, String destinationFilePath, int compressionLevel){
-        // Default implementation (can be overridden by implementing classes)
-    }
+    public void compressFile(String sourceFilePath, String destinationFilePath, int compressionLevel);
 
     // Method to return success status
-    public default void getCompressionSuccessStatus(){
-    }
+    public boolean getCompressionSuccessStatus();
 
     // Method to return compression
-    public static double getCompressionRatio(){
-        return 0.0;
-    }
+    public double getCompressionRatio();
 
     // Method to return time taken for compression
-    public static long getCompressionTime(){
-        return 0L;
-    }
+    public long getCompressionTime();
 
     // Method to return original file size
-    public static long getOriginalFileSize(){
-        return 0L;
-    }
+    public long getOriginalFileSize();
 
     // Method to return compressed file size
-    public static long getCompressedFileSize(){
-        return 0L;
-    }
+    public long getCompressedFileSize();
 
     //Method to display the compression details: Time it took, original size, compressed size,
-    public static void displayCompressionDetails(){
-        // Default implementation (can be overridden by implementing classes)
-    }
+    public void displayCompressionDetails();
 
     // Define method to decompress
-    public default void decompressFile(String sourceFilePath, String destinationFilePath){
-        // Default implementation (can be overridden by implementing classes)
-    }
+    public void decompressFile(String sourceFilePath, String destinationFilePath);
 
     // Decompression success status
-    public default void getDecompressionSuccessStatus(){
-    }
+    public boolean getDecompressionSuccessStatus();
 
     // Method to display the decompression details
-    public default void displayDecompressionDetails(){
-
-    }
+    public void displayDecompressionDetails();
 }
