@@ -60,11 +60,14 @@ public class HuffmanStrategy implements CompressionStrategy {
 
     @Override
     public void displayCompressionDetails() {
+        System.out.println("================================================================");
         System.out.println("Compression Details:");
+        System.out.println("Success Status: " + compressionSuccessStatus);
         System.out.println("Original File Size: " + originalFileSize + " bytes");
         System.out.println("Compressed File Size: " + compressedFileSize + " bytes");
         System.out.println("Compression Ratio: " + String.format("%.2f", compressionRatio) + "%");
         System.out.println("Time Taken for Compression: " + compressionTime + " ms");
+        System.out.println("================================================================");
 
     }
 
@@ -83,12 +86,13 @@ public class HuffmanStrategy implements CompressionStrategy {
 
     @Override
     public void displayDecompressionDetails() {
+        System.out.println("================================================================");
         System.out.println("Decompression Details:");
         System.out.println("Time taken for Decompression: " + (endTime - startTime) + " ms");
+        System.out.println("Success Status: " + decompressionSuccessStatus);
+        System.out.println("================================================================");
 
     }
 
-    public void setCompressionRatio(double compressionRatio) {
-        this.compressionRatio = compressionRatio;
-    }
+
 }
