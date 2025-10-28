@@ -6,13 +6,14 @@ import java.util.ArrayList;
 // The encoder produces a string output in 0s and 1s but files store bytes not strings
 public class BitStreamHandler {
 
-    private ArrayList<Byte> bits;
     String bitString;
+    private int paddingNeeded;
 
     // Constructor
-    public BitStreamHandler(String bitString){
+    public BitStreamHandler(String bitString, int paddingNeeded){
+        this.paddingNeeded = paddingNeeded;
         this.bitString = bitString;
-        this.bits = new ArrayList<>();
+        ArrayList<Byte> bits = new ArrayList<>();
     }
 
 
@@ -32,15 +33,10 @@ public class BitStreamHandler {
         }
 
         // Add padding zeros to the end
-        // Redo this.
-        StringBuilder bitStringBuilder = new StringBuilder(bitString);
-        for (int i = 0; i < paddingNeeded - 1; i++){
-            bitStringBuilder.append("0");
-        }
-        bitString = bitStringBuilder.toString();
+        bitString = bitString + "0".repeat(paddingNeeded);
 
         // Convert each 8-bit chunk to byte
-        for (int i = 0; i == bitString.length(); i+=8 ){
+        for (int i = 0; i < bitString.length(); i+=8 ){
             String eightBits = bitString.substring(i,i+8);
             int byteValue = Integer.parseInt(eightBits,2); // binary to int
             byteList.add((byte) byteValue);
@@ -56,12 +52,23 @@ public class BitStreamHandler {
 
     }
 
-    public void bitArrayToString(byte[] data){
+    public String bitArrayToString(byte[] data){
+        if(data == null){
+            return "";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (byte b: data){
+            String bits = String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0');
+            sb.append(bits);
+        }
+
+        return sb.toString();
 
     }
 
-    public void getPaddingInfo(){
-
+    public int getPaddingInfo(){
+        return paddingNeeded;
     }
 
 }
