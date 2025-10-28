@@ -15,6 +15,7 @@ public class HuffmanTree {
     public HuffmanTree(Map<Byte, Integer> frequencies){
         this.frequencies = frequencies;
         this.root = null;
+        buildTree(); // Build the tree upon initialization
     }
 
     // Methods to build the tree, get the root, etc. would go here
@@ -41,6 +42,18 @@ public class HuffmanTree {
     // Looping through the frequencies map to add nodes to the priority queue
     public void buildTree(){
         PriorityQueue<HuffmanNode> queue = new PriorityQueue<>((n1, n2) -> Integer.compare(n1.getFrequency(), n2.getFrequency())); // Using a lambda queue which is much cleaner, it is a local variable now.
+        // Edge case when the frequency map is empty
+        if (root == null){
+            root = new HuffmanNode((byte)0,0); // Create a dummy root node with 0 frequency
+            return; // Exit the method early
+        }
+
+        // Edge cause: If there is only one unique byte in the file
+        if (root.isLeaf()){
+            HuffmanNode dummyNode = new HuffmanNode((byte)0,0); // Creating a dummy node
+            // Creating a parent node
+            root = new HuffmanNode(root, dummyNode); // Update the root to be the paren node
+        }
         for (Map.Entry<Byte, Integer> entry: frequencies.entrySet()){
             HuffmanNode node = new HuffmanNode(entry.getKey(), entry.getValue());
             queue.add(node);
@@ -55,21 +68,6 @@ public class HuffmanTree {
         }
         root = queue.poll();
 
-
-        // Edge case when the frequency map is empty
-        if (root == null){
-            root = new HuffmanNode((byte)0,0); // Create a dummy root node with 0 frequency
-            return; // Exit the method early
-        }
-
-        // Edge cause: If there is only one unique byte in the file
-        if (root.isLeaf()){
-            HuffmanNode dummyNode = new HuffmanNode((byte)0,0); // Creating a dummy node
-            HuffmanNode parent = new HuffmanNode(root, dummyNode); // Creating a parent node
-            root = parent; // Update the root to be the paren node
-        }
-
-        buildTree(); // Call the buildTree method to construct the Huffman tree
     }
 
 }
