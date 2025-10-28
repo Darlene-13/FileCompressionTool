@@ -18,8 +18,6 @@ public class FrequencyAnalyzer {
 
     // Method to analyze
     public void analyze(byte[] data){
-        // Check if it is null
-
         // Counts the byte
         for (byte b: data){
             if (frequencyTable.containsKey(b)){
@@ -31,7 +29,7 @@ public class FrequencyAnalyzer {
     }
 
     // Populate the map
-    public Map<Byte, Integer> getFrequencyTable(Map<Byte, Integer> frequencyTable){
+    public Map<Byte, Integer> getFrequencyTable(){
         return frequencyTable;
     }
 }
