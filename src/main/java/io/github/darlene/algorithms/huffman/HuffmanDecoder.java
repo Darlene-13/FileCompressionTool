@@ -39,7 +39,7 @@ public class HuffmanDecoder {
 
     }
 
-    public List<Byte> getDecodedData(List<Byte> li){
+    public List<Byte> getDecodedData(){
         return this.decodedData;
     }
 
