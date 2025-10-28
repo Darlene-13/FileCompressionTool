@@ -7,5 +7,5 @@ import java.util.Map;
 
 public class HuffmanEncoder {
 
-    Map<Byte, String> codingTable = new HashMap<>();
+    Map<Byte, String> codingTable;
 }

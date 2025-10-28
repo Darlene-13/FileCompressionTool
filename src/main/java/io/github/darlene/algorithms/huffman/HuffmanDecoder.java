@@ -8,5 +8,5 @@ import io.github.darlene.algorithms.huffman.HuffmanTree;
 
 public class HuffmanDecoder {
 
-    Map<String, Integer> reverseMap = new HashMap<>();
+    Map<String, Integer> reverseMap;
 }
