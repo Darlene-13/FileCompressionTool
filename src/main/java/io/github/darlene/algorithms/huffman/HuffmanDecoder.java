@@ -11,7 +11,7 @@ public class HuffmanDecoder {
     private List<Byte> decodedData;
 
     // Constructor
-    public HuffmanDecoder(HuffmanTree tree, String encodedData, List<Byte> decodedData){
+    public HuffmanDecoder(HuffmanTree tree, String encodedData){
         this.root = tree.getRoot();
         this.encodedData = encodedData;
         this.decodedData = new ArrayList<>();
