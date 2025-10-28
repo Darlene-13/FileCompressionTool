@@ -13,11 +13,12 @@ public class HuffmanEncoder {
         this.codingTable = new HashMap<>();
         generateCodes();
     }
-
     //Generate codes method
     public void generateCodes(){
         buildCodingTable(this.root,"");
     }
+
+    // Method to build coding table
 
     public void buildCodingTable(HuffmanNode node, String code){
         // Edge case 1: If node is null
@@ -36,14 +37,21 @@ public class HuffmanEncoder {
 
     }
     // Method to get codes
-    public String getCodes(byte symbol){
+    public String getCode(byte symbol){
         return codingTable.get(symbol);
     }
 
     // Method to encode
-    public void enCode(byte[] fileData){
+    public String encode(byte[] fileData){
         // Empty String builder to hold the lists
+        StringBuilder sb = new StringBuilder();
+        for (byte symbol: fileData){  // For each byte in fileData
+            // Get the code for this byte in the coding Table
+            String code = codingTable.get(symbol);
+            sb.append(code);   // Append the code for the byte in string builder
+        }
 
+        return sb.toString();
 
     }
 
