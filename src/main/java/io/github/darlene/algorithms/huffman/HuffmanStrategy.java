@@ -150,6 +150,19 @@ public class HuffmanStrategy implements CompressionStrategy {
     public void decompressFile(String sourceFilePath, String destinationFilePath) {
         startTime = System.currentTimeMillis();
 
+        try{
+
+
+
+
+        } catch (FileNotFoundException e){
+            decompressionSuccessStatus = false;
+            throw new FileNotFoundException("Source file not found: " + sourceFilePath);
+        } catch (Exception e){
+            decompressionSuccessStatus = false;
+            throw new DecompressionException("Unexpected error occurred during decompression");
+        }
+
         decompressionSuccessStatus = true;
         endTime = System.currentTimeMillis();
     }
