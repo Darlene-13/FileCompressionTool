@@ -8,16 +8,19 @@ public class BitStreamHandler {
 
     String bitString;
     private int paddingNeeded;
+    private int paddingCount;
 
     // Constructor
-    public BitStreamHandler(String bitString, int paddingNeeded){
+    public BitStreamHandler(String bitString, int paddingNeeded, int paddingCount){
         this.paddingNeeded = paddingNeeded;
         this.bitString = bitString;
-        ArrayList<Byte> bits = new ArrayList<>();
+        this.paddingCount = paddingCount;
     }
 
 
     // String to bit array
+    // When converting bits to byte array, the bitString length must always be a multiple of 8, 1byte = 8 bits.
+    // Padding is adding "0" to the end of the bitString to make its length and multiple of 8 and this must be specified in decompression
     public byte[] stringToBitArray(String bitString){
         if (bitString == null || bitString.isEmpty()){
             return new byte[0];
@@ -27,9 +30,9 @@ public class BitStreamHandler {
 
         // Calculate the padding needed
         int remainder = bitString.length() % 8;
-        int paddingNeeded = 0;
+        this.paddingNeeded = 0;
         if(remainder != 0){
-            paddingNeeded = 8 - remainder;
+            this.paddingNeeded = 8 - remainder;
         }
 
         // Add padding zeros to the end
@@ -52,6 +55,8 @@ public class BitStreamHandler {
 
     }
 
+
+    // Key thing to note is that if we happen to have padding added during compression then we need to remove that padding when converting back to string
     public String bitArrayToString(byte[] data){
         if(data == null){
             return "";
@@ -63,7 +68,13 @@ public class BitStreamHandler {
             sb.append(bits);
         }
 
-        return sb.toString();
+        String result = sb.toString();
+
+        // Remove padding if any
+        if (paddingCount > 0){
+            result = result.substring(0, result.length() - paddingNeeded);
+        }
+        return result;
 
     }
 
