@@ -49,7 +49,16 @@ Think of it like language: If I write "the the the the the" five times, I could 
 1. File Compression 
 2. File Decompression
 
-
+---
+## SERIALIZATION FOR COMPRESSION AND DECOMPRESSION
+### What is Serialization and why can't we decompress data without it?
+```
+Serialization is the process of converting the an object (For our case it is the HuffmanTree with nodes and Links) to nodes that can be saved to a file and reconstructed later.
+The Challenge:
+When we compress a file using Huffman Coding, we build a binary tree (HuffmanTree) to represent the variable-length codes for each byte based on their frequencies.
+HuffmanTree has HuffmanNodes with left/right child pointers. How do you save "pointers" to a file? You can't.
+Instead of saving the pointers we can save that tree structure in a way that is easier to rebuild it.
+```
 
 ---
 ## SUPPORTED FORMATS AND ALGORITHMS
