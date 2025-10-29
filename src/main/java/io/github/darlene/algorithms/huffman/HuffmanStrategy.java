@@ -149,9 +149,20 @@ public class HuffmanStrategy implements CompressionStrategy {
     @Override
     public void decompressFile(String sourceFilePath, String destinationFilePath) {
         startTime = System.currentTimeMillis();
-
         try{
+            // Read from the file
+            Path sourceFile = Paths.get(sourceFilePath);
 
+
+            // Extract padding info and compressed data
+
+            // Convert bytes to bits
+
+
+            // Decode using tree
+
+
+            // Get original file data
 
 
 

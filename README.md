@@ -58,6 +58,9 @@ The Challenge:
 When we compress a file using Huffman Coding, we build a binary tree (HuffmanTree) to represent the variable-length codes for each byte based on their frequencies.
 HuffmanTree has HuffmanNodes with left/right child pointers. How do you save "pointers" to a file? You can't.
 Instead of saving the pointers we can save that tree structure in a way that is easier to rebuild it.
+
+This method is called Pre-order Traversal with markers: This basically involves, for every node we search we start with the left and then to the right and we use recursion to visit all nodes.
+When we hit a leaf node (a node with no children), we write a special marker (like '1') followed by the byte value. For internal nodes, we write a different marker (like '0').
 ```
 
 ---
