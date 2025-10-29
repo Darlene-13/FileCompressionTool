@@ -8,13 +8,12 @@ public class BitStreamHandler {
 
     String bitString;
     private int paddingNeeded;
-    private int paddingCount;
 
     // Constructor
-    public BitStreamHandler(String bitString, int paddingNeeded, int paddingCount){
-        this.paddingNeeded = paddingNeeded;
+    // Use constructor when the object NEEDS that data to function properly from the start.
+    //Use method parameters when the data is specific to THAT operation, not the entire object
+    public BitStreamHandler(String bitString){
         this.bitString = bitString;
-        this.paddingCount = paddingCount;
     }
 
 
@@ -57,7 +56,7 @@ public class BitStreamHandler {
 
 
     // Key thing to note is that if we happen to have padding added during compression then we need to remove that padding when converting back to string
-    public String bitArrayToString(byte[] data){
+    public String bitArrayToString(byte[] data, int paddingToRemove){
         if(data == null){
             return "";
         }
@@ -71,7 +70,7 @@ public class BitStreamHandler {
         String result = sb.toString();
 
         // Remove padding if any
-        if (paddingCount > 0){
+        if (paddingToRemove > 0){
             result = result.substring(0, result.length() - paddingNeeded);
         }
         return result;
