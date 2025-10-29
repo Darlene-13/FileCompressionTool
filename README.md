@@ -1,12 +1,42 @@
 # FILE COMPRESSION TOOLS
 
 ---
-## OVERVIEW
-This is a file Compression tool made in Java.
-It supports various formats and algorithms.
-This project is meant for learning purposes.
 
-The Project aims to depict parallel processing, multithreading , OOP amongst other Java Properties.
+- This is a fun project though. You gotta love compression algorithms!
+- This is a file Compression tool made in Java.
+- It supports various formats and algorithms.
+- This project is meant for learning purposes.
+
+- The Project aims to depict parallel processing, multithreading , OOP amongst other Java Properties.
+
+## OVERVIEW
+### What Is Compression, Really?
+When you compress a file, you’re just trying to represent the same information using fewer bits.
+````
+Original: AAAAABBBBCCCC
+Compressed: 5A4B4C
+````
+
+#### Families of Compression Algorithms'
+1. ***Dictionary-Based Compression***
+> - Looks for repeated patterns and replaces them with shorter references. 
+> - For example: They build a table (dictionary) of repeated sequences (like “the”, “compression”, “data”, etc.)
+> - When those sequences appear again, they store a reference (like “#12”) instead of repeating them
+> - Examples: LZ77, LZ78, LZW , DEFLATE (used in ZIP, PNG, GZIP — combines LZ77 + Huffman)
+
+2. ***Transform-Based Compression***
+> - Changes the way data is represented to make it more compressible.
+> - For example: The Burrows-Wheeler Transform rearranges data to group similar bytes together, making it easier to compress.
+>   - Examples: BWT (used in BZIP2), Discrete Cosine Transform (used in JPEG)   
+>   - Burrows–Wheeler Transform (BWT) – shuffles data for pattern grouping 
+>   - Move-To-Front (MTF) – makes similar symbols close together 
+>   - Huffman coding – encodes them efficiently
+
+
+3. ***Entropy-Based Compression***
+> - Uses statistical properties of the data to assign shorter codes to more frequent symbols.
+> - For example: Huffman Coding builds a binary tree where frequently occurring bytes get shorter bit sequences.
+> - Examples: Huffman Coding, Arithmetic Coding and PPM (Prediction by Partial Matching).
 
 **The Core Problem:**
 When you have a file, it's made of bytes. Each byte is a number from 0-255. A file takes up space. The goal of compression is to represent the same information using fewer bytes.
@@ -32,9 +62,8 @@ Think of it like language: If I write "the the the the the" five times, I could 
 | TAR + GZIP | .tar.gz / .tgz | DEFLATE | LZ77 + Huffman | Apache Commons Compress | Preserves Unix permissions, multi-file |
 | BZIP2 | .bz2 | Burrows-Wheeler Transform + Move-to-Front + Huffman | RLE | Apache Commons Compress | Better compression than GZIP, slower |
 | XZ | .xz | LZMA2 | Range Encoder + Huffman variants | Apache Commons Compress | Excellent compression, very slow |
-| 7-Zip | .7z | LZMA2 | Multiple codecs | Apache Commons Compress / Sevenz | Best compression, slowest |
 | RAR | .rar | PPM (Prediction by Partial Matching) or LZ | Huffman | Not recommended (proprietary, limited Java support) | Skip for this project |
-| LZ4 | .lz4 | LZ4 (fast LZ variant) | - | lz4-java library | Ultra-fast, lower compression |
+
 
 ---
 ### Algorithms Deep Dive
@@ -49,19 +78,19 @@ Think of it like language: If I write "the the the the the" five times, I could 
 - It uses a binary tree (min heap/ priority queue)
 - This is the core of compression and decompression of files
 
-3. Burrows-Wheeler Transform
+3. **Burrows-Wheeler Transform**
 - It re-arranges data to improve compressibility
 - Followed by Move-to-Front and Run-Length Encoding
 - Then Huffman Encoding
 - It has a better compression Ratio as compared to DEFLATE
 
-4. LZMA/LZMA2 (XZ, 7Z)
+4. **LZMA/LZMA2 (XZ, 7Z)**
 - Advanced LZ variant with range encoding
 - It has an extremely high compression ratio.
 - Much slower than DEFLATE
 - It follows the modern standard for archival
 
-5. LZ4 (ULTRA FAST)
+5. **LZ4 (ULTRA FAST)**
 - It is a simplified LZ Algorithm
 - It Prioritizes speeed over compression ration
 -  It is used when in need of fast compression with decent ratio.
@@ -186,3 +215,9 @@ FileCompressionManager (Main coordinator)
 └── getCompressionStatistics()
 
 This ties all layers together
+```
+---
+
+### N/B: In future I aim to Optimize chunking using adaptive sizing based on file type and content analysis, that is incase we have a large file like let's say 100GB plus.
+## AUTHOR
+DARLENE WENDY
