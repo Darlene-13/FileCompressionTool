@@ -2,7 +2,7 @@ package io.github.darlene.core;
 
 import java.util.Set;
 
-// This are file compressions mapped to the algorithms they use
+// These are file compressions mapped to the algorithms they use
 public enum CompressionFormat {
 
     ZIP(Set.of(CompressionType.DEFLATE), ".zip", 9),

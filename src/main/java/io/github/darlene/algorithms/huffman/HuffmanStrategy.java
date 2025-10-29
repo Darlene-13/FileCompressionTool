@@ -5,6 +5,8 @@ import io.github.darlene.algorithms.huffman.FrequencyAnalyzer;
 import io.github.darlene.algorithms.huffman.BitStreamHandler;
 import io.github.darlene.algorithms.huffman.HuffmanDecoder;
 import io.github.darlene.algorithms.huffman.HuffmanEncoder;
+import java.io.File;
+
 
 
 import io.github.darlene.core.CompressionStrategy;
@@ -25,6 +27,19 @@ public class HuffmanStrategy implements CompressionStrategy {
 
 
     @Override
+    // Compress strategy
+    /*
+    * 1. Read data from the source file
+    * 2. Analyze frequencies using the methods in frequency analyzer
+    * 3. Build tree using HuffmanTree method
+    * 4. Encode data
+    * 5. Convert bits to bytes
+    * 6. Write to destination file
+    * 7. Calculate the metrics
+    * 8. Set the success status.
+    *
+    * // It is important to handle file exceptions.
+    * */
     public void compressFile(String sourceFilePath, String destinationFilePath, int compressionLevel) {
         startTime = System.currentTimeMillis();
 

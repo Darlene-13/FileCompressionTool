@@ -218,6 +218,7 @@ This ties all layers together
 ```
 ---
 
-### N/B: In future I aim to Optimize chunking using adaptive sizing based on file type and content analysis, that is incase we have a large file like let's say 100GB plus.
+### N/B: 
+> In future, I aim to Optimize chunking using adaptive sizing based on file type and content analysis, that is incase we have a large file like let's say 100GB plus.
 ## AUTHOR
 DARLENE WENDY
