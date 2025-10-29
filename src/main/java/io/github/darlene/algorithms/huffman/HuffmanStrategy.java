@@ -1,13 +1,6 @@
 package io.github.darlene.algorithms.huffman;
 
 
-import io.github.darlene.algorithms.huffman.HuffmanNode;
-import io.github.darlene.algorithms.huffman.HuffmanTree;
-import io.github.darlene.algorithms.huffman.FrequencyAnalyzer;
-import io.github.darlene.algorithms.huffman.HuffmanDecoder;
-import io.github.darlene.algorithms.huffman.HuffmanEncoder;
-import io.github.darlene.algorithms.huffman.BitStreamHandler;
-
 // Import exceptions
 import io.github.darlene.exception.CompressionException;
 import io.github.darlene.exception.FileNotFoundException;
@@ -22,7 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
-
+import java.util.Map;
 
 
 import io.github.darlene.core.CompressionStrategy;
@@ -63,6 +56,18 @@ public class HuffmanStrategy implements CompressionStrategy {
             Path sourceFile = Paths.get(sourceFilePath);
             byte [] fileData = Files.readAllBytes(sourceFile);
 
+            // Analyze the frequencies
+            FrequencyAnalyzer analyzer = new FrequencyAnalyzer(fileData);
+            Map<Byte, Integer> frequencies = analyzer.getFrequencyTable();
+
+            // Build  tree using the huffman tree class
+            HuffmanTree huffmanTree = new HuffmanTree(frequencies);
+
+            // Encode data using huffman encoder to get the encoded bit string
+            HuffmanEncoder encoder = new HuffmanEncoder(huffmanTree);
+            String encodedBitString = encoder.encode(fileData);
+
+            // Converting string to byte array to get original file size
             BitStreamHandler handler = new BitStreamHandler("");
             byte [] compressedBytes = handler.stringToBitArray(encodedBitString);
             int paddingInfo = handler.getPaddingInfo();
@@ -70,9 +75,7 @@ public class HuffmanStrategy implements CompressionStrategy {
             FileOutputStream fileOutputStream = new FileOutputStream(destinationFilePath);
             fileOutputStream.write(paddingInfo);
             fileOutputStream.write(compressedBytes);
-            fileOutputStream.close(); // Close the reader stream because we are done reading and to avoid memry leaks.
-
-
+            fileOutputStream.close(); // Close the reader stream because we are done reading and to avoid memory leaks.
             compressionSuccessStatus = true;
 
         } catch (FileNotFoundException e){
