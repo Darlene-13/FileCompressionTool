@@ -1,11 +1,22 @@
 package io.github.darlene.algorithms.huffman;
+
+
 import io.github.darlene.algorithms.huffman.HuffmanNode;
 import io.github.darlene.algorithms.huffman.HuffmanTree;
-import io.github.darlene.algorithms.huffman.FrequencyAnalyzer;
-import io.github.darlene.algorithms.huffman.BitStreamHandler;
-import io.github.darlene.algorithms.huffman.HuffmanDecoder;
-import io.github.darlene.algorithms.huffman.HuffmanEncoder;
-import java.io.File;
+
+
+// Import exceptions
+import io.github.darlene.exception.CompressionException;
+import io.github.darlene.exception.FileNotFoundException;
+
+
+
+
+// Importing necessary libraries
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.io.IOException;
 
 
 
@@ -42,13 +53,30 @@ public class HuffmanStrategy implements CompressionStrategy {
     * */
     public void compressFile(String sourceFilePath, String destinationFilePath, int compressionLevel) {
         startTime = System.currentTimeMillis();
+        // Read the source file to byte array
+        try{
+            Path sourceFile = Paths.get(sourceFilePath);
+            byte [] fileData = Files.readAllBytes(sourceFile);
+            // Compression logic
 
 
+            compressionSuccessStatus = true;
 
+        } catch (FileNotFoundException e){
+            compressionSuccessStatus = false;
+            throw new FileNotFoundException("Source file not found: " + sourceFilePath);
 
+        } catch (IOException e){
+            compressionSuccessStatus = false;
+            throw new CompressionException("Error reading file: " + e.getMessage());
 
-        compressionSuccessStatus = true;
-        endTime = System.currentTimeMillis();
+        } catch (Exception e){
+            compressionSuccessStatus = false;
+            throw new CompressionException("Unexpected error during compression: " + e.getMessage());
+        } finally {
+            endTime = System.currentTimeMillis();
+            compressionTime = endTime - startTime;
+        }
 
     }
 
