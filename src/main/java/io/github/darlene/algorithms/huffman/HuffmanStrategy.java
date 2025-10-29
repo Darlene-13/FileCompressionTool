@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.io.IOException;
 import java.util.Map;
+import java.io.DataOutputStream;
 
 
 import io.github.darlene.core.CompressionStrategy;
@@ -73,9 +74,15 @@ public class HuffmanStrategy implements CompressionStrategy {
             int paddingInfo = handler.getPaddingInfo();
 
             FileOutputStream fileOutputStream = new FileOutputStream(destinationFilePath);
-            fileOutputStream.write(paddingInfo);
-            fileOutputStream.write(compressedBytes);
-            fileOutputStream.close(); // Close the reader stream because we are done reading and to avoid memory leaks.
+            DataOutputStream dataOut = new DataOutputStream(fileOutputStream);
+            dataOut.writeInt(paddingInfo);
+            dataOut.write(compressedBytes);
+
+            // Calculating the metrics
+            this.originalFileSize = fileData.length;
+            this.compressedFileSize = compressedBytes.length;
+
+            dataOut.close(); // Close the reader stream because we are done reading and to avoid memory leaks.
             compressionSuccessStatus = true;
 
         } catch (FileNotFoundException e){
