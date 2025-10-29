@@ -3,16 +3,21 @@ package io.github.darlene.algorithms.huffman;
 
 import io.github.darlene.algorithms.huffman.HuffmanNode;
 import io.github.darlene.algorithms.huffman.HuffmanTree;
-
+import io.github.darlene.algorithms.huffman.FrequencyAnalyzer;
+import io.github.darlene.algorithms.huffman.HuffmanDecoder;
+import io.github.darlene.algorithms.huffman.HuffmanEncoder;
+import io.github.darlene.algorithms.huffman.BitStreamHandler;
 
 // Import exceptions
 import io.github.darlene.exception.CompressionException;
 import io.github.darlene.exception.FileNotFoundException;
+import io.github.darlene.exception.DecompressionException;
 
 
 
 
 // Importing necessary libraries
+import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -57,7 +62,15 @@ public class HuffmanStrategy implements CompressionStrategy {
         try{
             Path sourceFile = Paths.get(sourceFilePath);
             byte [] fileData = Files.readAllBytes(sourceFile);
-            // Compression logic
+
+            BitStreamHandler handler = new BitStreamHandler("");
+            byte [] compressedBytes = handler.stringToBitArray(encodedBitString);
+            int paddingInfo = handler.getPaddingInfo();
+
+            FileOutputStream fileOutputStream = new FileOutputStream(destinationFilePath);
+            fileOutputStream.write(paddingInfo);
+            fileOutputStream.write(compressedBytes);
+            fileOutputStream.close(); // Close the reader stream because we are done reading and to avoid memry leaks.
 
 
             compressionSuccessStatus = true;
