@@ -105,11 +105,14 @@ public class HuffmanStrategy implements CompressionStrategy {
 
     @Override
     public boolean getCompressionSuccessStatus() {
-        return false;
+        return compressionSuccessStatus;
     }
 
     @Override
     public double getCompressionRatio() {
+        if (originalFileSize == 0){
+            return 0.0;
+        }
         compressionRatio = ((double) (originalFileSize - compressedFileSize) / originalFileSize) * 100.0;
         return compressionRatio;
     }
