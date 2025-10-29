@@ -156,7 +156,7 @@ public class HuffmanStrategy implements CompressionStrategy {
 
     @Override
     public boolean getDecompressionSuccessStatus() {
-        return false;
+        return decompressionSuccessStatus;
     }
 
     @Override
