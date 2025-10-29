@@ -1,4 +1,10 @@
 package io.github.darlene.algorithms.huffman;
+import io.github.darlene.algorithms.huffman.HuffmanNode;
+import io.github.darlene.algorithms.huffman.HuffmanTree;
+import io.github.darlene.algorithms.huffman.FrequencyAnalyzer;
+import io.github.darlene.algorithms.huffman.BitStreamHandler;
+import io.github.darlene.algorithms.huffman.HuffmanDecoder;
+import io.github.darlene.algorithms.huffman.HuffmanEncoder;
 
 
 import io.github.darlene.core.CompressionStrategy;
