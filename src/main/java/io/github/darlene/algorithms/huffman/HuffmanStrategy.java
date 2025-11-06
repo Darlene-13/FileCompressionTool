@@ -11,6 +11,7 @@ import io.github.darlene.exception.DecompressionException;
 
 // Importing necessary libraries
 import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -169,7 +170,9 @@ public class HuffmanStrategy implements CompressionStrategy {
             String bitString = handler.bitArrayToString(compressedBytes, paddingInfo);
 
             // Decode the bit string using huffman decoder
-            HuffmanDecoder decoder = new HuffmanDecoder(tree, BitString);
+            HuffmanTree tree = new HuffmanTree(); // Dummy tree just for the root
+            tree.setRoot(root);
+            HuffmanDecoder decoder = new HuffmanDecoder(tree, bitString);
             decoder.decode();
             byte [] decodedData = decoder.getDecodedData().toArray();
 
