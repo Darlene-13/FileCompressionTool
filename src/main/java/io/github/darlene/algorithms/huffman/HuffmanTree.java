@@ -12,6 +12,10 @@ public class HuffmanTree {
     private HuffmanNode root;
     private Map<Byte, Integer> frequencies;
 
+    public HuffmanTree(){
+        this.frequencies = new HashMap<>();
+        this.root = null;
+    }
     public HuffmanTree(Map<Byte, Integer> frequencies){
         this.frequencies = frequencies;
         this.root = null;
@@ -51,20 +55,21 @@ public class HuffmanTree {
             return; // Return a dummy node
         }
 
-
         // Edge case 2: In case of a single unique byte in the frequency map
         if( frequencies.size() == 1){
             byte singleByte = frequencies.keySet().iterator().next();
             int frequency = frequencies.get(singleByte);
             HuffmanNode leafNode = new HuffmanNode(singleByte,frequency);
             HuffmanNode dummyNode = new HuffmanNode((byte)0,0);
-            HuffmanNode parentNode = new HuffmanNode(leafNode, dummyNode);
+            root = new HuffmanNode(leafNode, dummyNode);
             return;
 
         }
 
+        PriorityQueue<HuffmanNode> queue = new PriorityQueue<>((n1, n2) ->
+        Integer.compare(n1.getFrequency(), n2.getFrequency())); // Using a lambda queue which is much cleaner, it is a local variable now.
 
-        PriorityQueue<HuffmanNode> queue = new PriorityQueue<>((n1, n2) -> Integer.compare(n1.getFrequency(), n2.getFrequency())); // Using a lambda queue which is much cleaner, it is a local variable now.
+
         for (Map.Entry<Byte, Integer> entry: frequencies.entrySet()){
             HuffmanNode node = new HuffmanNode(entry.getKey(), entry.getValue());
             queue.add(node);
@@ -80,5 +85,4 @@ public class HuffmanTree {
         root = queue.poll();
 
     }
-
 }
