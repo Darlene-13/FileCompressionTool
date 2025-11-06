@@ -22,6 +22,9 @@ public class HuffmanTree {
     public HuffmanNode getRoot(){
         return this.root;
     }
+    public void setRoot(HuffmanNode root){
+        this.root = root;
+    }
 
     public Map<Byte, Integer> getFrequencies(){
         return this.frequencies;

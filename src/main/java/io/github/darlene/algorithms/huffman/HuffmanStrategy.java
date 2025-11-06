@@ -182,9 +182,9 @@ public class HuffmanStrategy implements CompressionStrategy {
             fileOutputStream.close();
 
             // Calculation of the metrics
-            originalFIleSize = compressedBytes.length;
+            originalFileSize = decodedData.length;
             compressedFileSize = compressedBytes.length;
-            decompressedSuccessStatus = true;
+            decompressionSuccessStatus = true;
 
         } catch (FileNotFoundException e){
             decompressionSuccessStatus = false;
@@ -192,10 +192,10 @@ public class HuffmanStrategy implements CompressionStrategy {
         } catch (Exception e){
             decompressionSuccessStatus = false;
             throw new DecompressionException("Unexpected error occurred during decompression");
+        } finally {
+            endTime = System.currentTimeMillis();
         }
 
-        decompressionSuccessStatus = true;
-        endTime = System.currentTimeMillis();
     }
 
     @Override
