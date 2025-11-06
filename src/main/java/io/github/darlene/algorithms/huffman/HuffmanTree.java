@@ -39,6 +39,7 @@ public class HuffmanTree {
     */
 
     // Using a lambda queue which is much cleaner
+
     // Looping through the frequencies map to add nodes to the priority queue
     public void buildTree(){
         // Edge case1: In case of an empty frequency map

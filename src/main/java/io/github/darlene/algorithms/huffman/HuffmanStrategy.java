@@ -150,21 +150,38 @@ public class HuffmanStrategy implements CompressionStrategy {
     public void decompressFile(String sourceFilePath, String destinationFilePath) {
         startTime = System.currentTimeMillis();
         try{
-            // Read from the file
-            Path sourceFile = Paths.get(sourceFilePath);
+            // Open input stread from the source file (Compressed file in this case)
+            FileInputStream fileInputStream = new FileInputStream(sourceFilePath);
+            DataInputStream dataIn = new DataInputStream(fileInputStream);
 
+            // Read the padding info
+            int paddingInfo = dataIn.readInt();
+            // Deserialize the huffman tree
+            HuffmanTreeSerializer treeSerializer = new HuffmanTreeSerializer();
+            HuffmanNode root = treeSerializer.deserializeTree(dataIn);
+            //Read the rest of the data as byte array
+            byte [] compressedBytes = dataIn.readAllBytes();
+            dataIn.close();
 
-            // Extract padding info and compressed data
+            // Converts bytes back to bit string
+            // So the path is bits to string (bitString) to original bytes
+            BitStreamHandler handler = new BitStreamHandler();
+            String bitString = handler.bitArrayToString(compressedBytes, paddingInfo);
 
-            // Convert bytes to bits
+            // Decode the bit string using huffman decoder
+            HuffmanDecoder decoder = new HuffmanDecoder(tree, BitString);
+            decoder.decode();
+            byte [] decodedData = decoder.getDecodedData().toArray();
 
+            // Write the decoded data to the destination file
+            FileOutputStream fileOutputStream = new FileOutputStream(destinationFilePath);
+            fileOutputStream.write(decodedData);
+            fileOutputStream.close();
 
-            // Decode using tree
-
-
-            // Get original file data
-
-
+            // Calculation of the metrics
+            originalFIleSize = compressedBytes.length;
+            compressedFileSize = compressedBytes.length;
+            decompressedSuccessStatus = true;
 
         } catch (FileNotFoundException e){
             decompressionSuccessStatus = false;
