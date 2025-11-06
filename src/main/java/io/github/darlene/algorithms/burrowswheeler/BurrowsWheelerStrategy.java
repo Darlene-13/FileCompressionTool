@@ -5,7 +5,6 @@ import io.github.darlene.core.CompressionStrategy;
 public class BurrowsWheeler implements CompressionStrategy {
     @Override
     public void compressFile(String sourceFilePath, String destinationFilePath, int compressionLevel) {
-        // Write the BWT algorithm the core 1.
 
     }
 
