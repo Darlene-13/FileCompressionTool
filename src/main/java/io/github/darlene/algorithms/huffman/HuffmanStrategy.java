@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.io.IOException;
 import java.util.Map;
 import java.io.DataOutputStream;
+import java.io.DataInputStream;
 
 
 import io.github.darlene.core.CompressionStrategy;
