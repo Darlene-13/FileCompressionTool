@@ -14,19 +14,14 @@ import io.github.darlene.strategies.XzCompressionStrategy;
 public class CompressionStrategyFactory{
 
     public static CompressionStrategy getStrategy(CompressionFormat format){
-        FileFormat fileFormat = FileTypeDetector.getFileType(file)
 
         switch (format) {
-            case TAR_GZ:
-                return new DeflateCompressionStrategy();
-            case ZIP:
-                return new DeflateCompressionStrategy();
-            case GZIP:
+            case TAR_GZ, ZIP, GZIP:
                 return new DeflateCompressionStrategy();
             case BZIP2:
                 return new Bzip2CompressionStrategy();
             case XZ:
-                return new XZCompressionStrategy();
+                return new XzCompressionStrategy();
             case RAR:
                 return new RarCompressionStrategy();
             default:

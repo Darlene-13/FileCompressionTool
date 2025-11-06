@@ -15,9 +15,9 @@ public class FileTypeDetector{
 
         // Use compression format enum method
         try{
-            CompressionFormat format = CompressionFormat.fromExtension(extension);
+            CompressionFormat format = CompressionFormat.getCompressionFormatByExtension(extension);
             return format;
-        } catch (IllegalArgumentException){
+        } catch (IllegalArgumentException e){
             throw new FormatNotSupportedException("Unsupported format: " + extension);
         }
     }
