@@ -14,6 +14,8 @@ import io.github.darlene.strategies.XzCompressionStrategy;
 public class CompressionStrategyFactory{
 
     public static CompressionStrategy getStrategy(CompressionFormat format){
+        FileFormat fileFormat = FileTypeDetector.getFileType(file)
+
         switch (format) {
             case TAR_GZ:
                 return new DeflateCompressionStrategy();
