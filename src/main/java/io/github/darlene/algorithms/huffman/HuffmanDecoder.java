@@ -39,8 +39,12 @@ public class HuffmanDecoder {
 
     }
 
-    public List<Byte> getDecodedData(){
-        return this.decodedData;
+    public byte[] getDecodedData(){
+        byte [] result = new byte[decodedData.size()];
+        for (int i = 0; i< decodedData.size(); i++){
+            result[i] = decodedData.get(i);
+        }
+        return result;
     }
 
 }

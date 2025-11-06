@@ -167,7 +167,7 @@ public class HuffmanStrategy implements CompressionStrategy {
 
             // Converts bytes back to bit string
             // So the path is bits to string (bitString) to original bytes
-            BitStreamHandler handler = new BitStreamHandler();
+            BitStreamHandler handler = new BitStreamHandler("");
             String bitString = handler.bitArrayToString(compressedBytes, paddingInfo);
 
             // Decode the bit string using huffman decoder
@@ -175,7 +175,7 @@ public class HuffmanStrategy implements CompressionStrategy {
             tree.setRoot(root);
             HuffmanDecoder decoder = new HuffmanDecoder(tree, bitString);
             decoder.decode(); // Calling the decode object method which is non-static.
-            byte [] decodedData = decoder.getDecodedData().toArray();
+            byte [] decodedData = decoder.getDecodedData();
 
             // Write the decoded data to the destination file
             FileOutputStream fileOutputStream = new FileOutputStream(destinationFilePath);

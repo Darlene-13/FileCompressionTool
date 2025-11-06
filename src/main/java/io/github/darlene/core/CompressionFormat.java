@@ -37,7 +37,7 @@ public enum CompressionFormat {
     }
 
     //Method to find file format based on file extension
-    public CompressionFormat getCompressionFormatByExtension(String extension){
+    public static CompressionFormat getCompressionFormatByExtension(String extension){
         for (CompressionFormat format: CompressionFormat.values()){
             if(format.fileExtension.equalsIgnoreCase(extension)){
                 return format;
