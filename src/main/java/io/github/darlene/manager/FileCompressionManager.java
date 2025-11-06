@@ -1,0 +1,2 @@
+// This ile is meant to coordinate multiple components to accomplish a task
+// It is impportant in the occasion that the application needs to get the user input, detect file type, get the right algorithm, call compress/ decompress, handler errors , track progress, display results etc,,

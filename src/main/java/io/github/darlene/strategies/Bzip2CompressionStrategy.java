@@ -1,0 +1,1 @@
+// Uses Bzip2 algorhtm also creates new objects for: mft and huffman
