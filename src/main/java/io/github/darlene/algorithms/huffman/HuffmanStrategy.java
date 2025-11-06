@@ -174,7 +174,7 @@ public class HuffmanStrategy implements CompressionStrategy {
             HuffmanTree tree = new HuffmanTree(); // Dummy tree just for the root
             tree.setRoot(root);
             HuffmanDecoder decoder = new HuffmanDecoder(tree, bitString);
-            decoder.decode();
+            decoder.decode(); // Calling the decode object method which is non-static.
             byte [] decodedData = decoder.getDecodedData().toArray();
 
             // Write the decoded data to the destination file
